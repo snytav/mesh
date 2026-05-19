@@ -42,3 +42,11 @@ tetra_mesh = meshio.Mesh(
 )
 meshio.write("simulation_mesh.xdmf", tetra_mesh)
 print("Mesh successfully generated: simulation_mesh.xdmf")
+
+# Separate tissue layers if your NIfTI file has multiple labels
+# (e.g., Label 1 = Brain Tissue, Label 2 = AVM Vessel)
+domain.add_subdomain(1, "Brain_Tissue")
+domain.add_subdomain(2, "AVM_Vessel")
+
+# When SVMTK compiles the mesh, it tags the tetrahedrons with these IDs
+domain.create_mesh(16)
